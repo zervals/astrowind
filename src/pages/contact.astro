@@ -77,3 +77,49 @@ const metadata = {
     ]}
   />
 </Layout>
+
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+  apiKey: 'AIzaSyBIEn3hMNm2GC24YYImkfA93flmPV1JfHo',
+  authDomain: 'website-22d07.firebaseapp.com',
+  projectId: 'website-22d07',
+  storageBucket: 'website-22d07.appspot.com',
+  messagingSenderId: '239309287004',
+  appId: '1:239309287004:web:0299335495932bf1358099',
+  measurementId: 'G-KLP94TXY10',
+};
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM fully loaded and parsed");
+
+    const form = document.querySelector('form');
+    console.log("Form element:", form);
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault(); // Prevent the default form submission
+      console.log("Form submission prevented");
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+      console.log("Form data collected:", data);
+
+      try {
+        const collectionName = 'contacts';
+        const docRef = await addDoc(collection(db, collectionName), data);
+        console.log("Document written with ID: ", docRef.id);
+        alert("Message sent successfully!");
+      } catch (e) {
+        console.error("Error adding document: ", e);
+        alert("Error sending message. Please try again.");
+      }
+    });
+  });
+</script>

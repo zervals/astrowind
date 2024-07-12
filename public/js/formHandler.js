@@ -3,12 +3,15 @@ import { collection, addDoc } from 'https://www.gstatic.com/firebasejs/9.6.1/fir
 
 document.addEventListener('DOMContentLoaded', () => {
   const form = document.querySelector('form');
+  console.log('Form handler loaded');
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault(); // Prevent the default form submission
+    console.log('Form submission prevented');
 
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
+    console.log('Form data collected:', data);
 
     try {
       const docRef = await addDoc(collection(db, 'contacts'), data);
